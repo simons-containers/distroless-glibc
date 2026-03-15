@@ -1,4 +1,4 @@
-FROM archlinux:base AS builder
+FROM archlinux:base-devel-20260308.0.497099 AS builder
 
 ARG TZDB_VERSION
 ARG TZDB_SOURCE=https://data.iana.org/time-zones/releases/tzdb-${TZDB_VERSION}.tar.lz
@@ -6,7 +6,7 @@ ARG CA_SCRIPT=https://github.com/curl/curl/raw/refs/heads/master/scripts/mk-ca-b
 ARG GLIBC_VERSION
 ARG GLIBC_SOURCE=https://ftp.gnu.org/gnu/glibc/glibc-${GLIBC_VERSION}.tar.xz
 
-RUN pacman -Sy --needed --noconfirm base-devel linux-api-headers python lzip >/dev/null
+RUN pacman -Sy --needed --noconfirm python lzip >/dev/null
 
 RUN mkdir -p \
  /base/{dev,etc,proc,run,sys,tmp,usr} \

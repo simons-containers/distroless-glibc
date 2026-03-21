@@ -9,7 +9,7 @@ Bare-bones distroless container image base that contains glibc, tzdata, and mozi
 | `GLIBC_VERSION` | Version of glibc to use
 | `TZ_VERSION` | Version of TZ to use
 
-Build container:
+Build container using build-args from versions.yaml:
 
 ```bash
 docker build -t \

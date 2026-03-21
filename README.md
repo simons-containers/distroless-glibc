@@ -12,11 +12,9 @@ Bare-bones distroless container image base that contains glibc, tzdata, and mozi
 Build container:
 
 ```bash
-docker build \
-  -t distroless-glibc:${GLIBC_VERSION} \
-  --build-arg TZ_VERSION=${TZ_VERSION} \
-  --build-arg GLIBC_VERSION=${GLIBC_VERSION} \
-  -f Containerfile .
+docker build -t \
+  distroless-glibc:$(yq -r .glibc versions.yaml) \
+  $(yq -r 'to_entries | .[] | "--build-arg \(.key | ascii_upcase)_VERSION=\(.value)"' versions.yaml) -f Containerfile .
 ```
 
 ## License

@@ -23,11 +23,11 @@ jobs:
           timeout_minutes: 10
           command: |
             set -uo pipefail
-            GLIBC=$(curl -s https://ftp.gnu.org/gnu/glibc/ \
+            GLIBC=$(curl -sf https://ftp.gnu.org/gnu/glibc/ \
               | grep -oP 'glibc-\K[0-9]+\.[0-9]+(?=\.tar\.xz)' \
               | sort -V | tail -1)
   
-            TZDB=$(curl -s https://data.iana.org/time-zones/tzdb/version)
+            TZDB=$(curl -sf https://data.iana.org/time-zones/tzdb/version)
   
             yq -i ".glibc = \"$GLIBC\"" versions.yaml
             yq -i ".tzdb = \"$TZDB\"" versions.yaml

@@ -36,9 +36,13 @@ WORKDIR /build/glibc
 RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} \
   && tar xf glibc.tar.xz --strip-components=1 \
   && mkdir build && cd build \
+  && export CFLAGS="-O2 -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fpie -fPIC -fno-plt -UENABLE_LOCK_ELISION -U__HAVE_ELISION" \
+  && export LDFLAGS="-Wl,-z,relro,-z,now,-z,noexecstack" \
   && ../configure --prefix=/usr --libdir=/usr/lib --sysconfdir=/etc \
     --enable-kernel=4.4 --with-bugurl=none --disable-static \
     --disable-selinux --disable-nscd --disable-obsolete-rpc \
+    --enable-stackguard-randomization \
+    --enable-bind-now \
     --disable-werror --quiet \
   && make -s -j$(nproc) \
   && make install DESTDIR=/base
@@ -56,7 +60,9 @@ RUN mkdir -p /base/usr/lib/locale && \
 RUN find /base/usr \( -name '*.h' -o -name '*.a' -o -name '*.o' \) -delete \
   && find /base/usr/bin -type f ! -name 'locale' -delete \
   && rm -fr /base/usr/include \
-  && rm -fr /base/usr/lib/audit \
+  && rm -fr /base/usr/lib/{audit,gconv} \
+  && rm -fr /base/usr/lib/locale/locale-archive \
+  && rm -fr /base/usr/bin/iconv \
   && rm -fr /base/usr/share/{info,i18n} \
   && rm -fr /base/usr/libexec/getconf \
   && rm -fr /base/var/cache/ldconfig \

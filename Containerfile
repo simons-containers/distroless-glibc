@@ -32,9 +32,15 @@ WORKDIR /build/ca
 RUN curl --silent --show-error --location --output mk-ca-bundle.pl ${CA_SCRIPT} \
   && perl mk-ca-bundle.pl /base/etc/ssl/certs/ca-certificates.crt
 
+# TODO(glibc): Remove this patch when GLIBC_VERSION != 2.43
 WORKDIR /build/glibc
 RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} \
   && tar xf glibc.tar.xz --strip-components=1 \
+  && if [ "$GLIBC_VERSION" = "2.43" ]; then \
+       curl -fsSL https://www.linuxfromscratch.org/patches/lfs/development/glibc-2.43-upstream_fixes-1.patch \
+         -o /tmp/glibc.patch \
+       && patch -Np1 -i /tmp/glibc.patch; \
+     fi \
   && mkdir build && cd build \
   && export CFLAGS="-O2 -fstack-protector-strong -D_FORTIFY_SOURCE=2 -fpie -fPIC -fno-plt -UENABLE_LOCK_ELISION -U__HAVE_ELISION" \
   && export LDFLAGS="-Wl,-z,relro,-z,now,-z,noexecstack" \

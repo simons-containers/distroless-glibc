@@ -67,13 +67,12 @@ RUN find /base/usr \( -name '*.h' -o -name '*.a' -o -name '*.o' \) -delete \
   && find /base/usr/bin -type f ! -name 'locale' -delete \
   && rm -fr /base/usr/include \
   && rm -fr /base/usr/lib/{audit,gconv} \
-  && rm -fr /base/usr/lib/locale/locale-archive \
   && rm -fr /base/usr/bin/iconv \
   && rm -fr /base/usr/share/{info,i18n} \
   && rm -fr /base/usr/libexec/getconf \
   && rm -fr /base/var/cache/ldconfig \
   && rm -fr /base/var/db \
-  && rm -f /base/etc/rpc /base/etc/ld.so.cache \
+  && rm -f /base/etc/rpc /base/etc/ld.so.{cache,conf} \
     /base/usr/lib/libc_malloc_debug.* /base/usr/lib/libthread_db.* \
     /base/usr/lib/libnss_compat.* /base/usr/lib/libnss_hesiod.* \
     /base/usr/lib/libnss_db.* /base/usr/lib/libnsl.* \

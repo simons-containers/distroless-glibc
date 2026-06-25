@@ -1,3 +1,8 @@
+![Latest](https://ghcr-badge.egpl.dev/simons-containers/distroless-glibc/latest_tag?ignore=latest,sha256*&label=latest)  
+![Size](https://ghcr-badge.egpl.dev/simons-containers/distroless-glibc/size?tag=latest)  
+![Tags](https://ghcr-badge.egpl.dev/simons-containers/distroless-glibc/tags?ignore=latest,sha256*)  
+
+
 # Distroless glibc container base
 
 Bare-bones distroless container image base that contains glibc, tzdata, and mozilla CA certificates.

@@ -1,4 +1,4 @@
-name: Deploy to registry
+name: Publish
 
 permissions:
   contents: write
@@ -8,10 +8,25 @@ permissions:
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - Containerfile
+      - sources.json
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Stub execution
-        run: ":"
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Deploy image
+        uses: simons-containers/actions/deploy@main
+        with:
+          appname: glibc
+          image_name: distroless-glibc
+          registry_token: ${{ secrets.GITHUB_TOKEN }}
+          badges_token: ${{ secrets.GITHUB_TOKEN }}
+          tag_latest: ${{ github.ref_name == github.event.repository.default_branch }}

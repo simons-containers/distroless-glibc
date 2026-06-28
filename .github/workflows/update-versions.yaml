@@ -35,8 +35,8 @@ jobs:
               --arg glibc "$GLIBC" \
               --arg tzdb  "$TZDB" \
               '
-                .glibc   = $glibc |
-                .tzdb    = $tzdb
+                .glibc.version = $glibc |
+                .tzdb.version  = $tzdb
               ' sources.json > tmp.json && mv tmp.json sources.json
 
             git diff sources.json

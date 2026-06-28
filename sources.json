@@ -1,11 +1,5 @@
 {
-  "tzdb": {
-    "version": "2026b",
-    "purl": "pkg:generic/tzdb",
-    "source": {
-      "url_pattern": "https://data.iana.org/time-zones/releases/tzdb-{version}.tar.lz"
-    }
-  },
+  "tzdb": "2026b",
   "ca-certificates": {
     "version": "master",
     "purl": "pkg:generic/ca-certificates",
@@ -13,11 +7,5 @@
       "url": "https://github.com/curl/curl/raw/refs/heads/master/scripts/mk-ca-bundle.pl"
     }
   },
-  "glibc": {
-    "version": "2.42",
-    "purl": "pkg:generic/glibc",
-    "source": {
-      "url_pattern": "https://ftp.gnu.org/gnu/glibc/glibc-{version}.tar.xz"
-    }
-  }
+  "glibc": "2.43"
 }

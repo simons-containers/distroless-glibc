@@ -1,5 +1,11 @@
 name: Deploy to registry
 
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+  attestations: write
+
 on:
   workflow_dispatch:
 

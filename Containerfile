@@ -1,10 +1,10 @@
 FROM archlinux:base-devel-20260308.0.497099 AS builder
 
 ARG TZDB_VERSION
-ARG TZDB_SOURCE=https://data.iana.org/time-zones/releases/tzdb-${TZDB_VERSION}.tar.lz
-ARG CA_SCRIPT=https://github.com/curl/curl/raw/refs/heads/master/scripts/mk-ca-bundle.pl
+ARG TZDB_SOURCE
 ARG GLIBC_VERSION
-ARG GLIBC_SOURCE=https://ftp.gnu.org/gnu/glibc/glibc-${GLIBC_VERSION}.tar.xz
+ARG GLIBC_SOURCE
+ARG CA_SCRIPT=https://github.com/curl/curl/raw/refs/heads/master/scripts/mk-ca-bundle.pl
 
 RUN pacman -Sy --needed --noconfirm python lzip >/dev/null
 

@@ -1,10 +1,16 @@
 name: Deploy to registry
 
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+  attestations: write
+
 on:
   workflow_dispatch:
 
 jobs:
-  test:
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Stub execution

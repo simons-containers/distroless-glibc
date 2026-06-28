@@ -8,21 +8,6 @@
 
 Bare-bones distroless container image base that contains glibc, tzdata, and mozilla CA certificates.
 
-## Building
-
-| Arg | Description |
-|---|---|
-| `GLIBC_VERSION` | Version of glibc to use
-| `TZ_VERSION` | Version of TZ to use
-
-Build container using build-args from versions.yaml:
-
-```bash
-docker build -t \
-  distroless-glibc:$(yq -r .glibc versions.yaml) \
-  $(yq -r 'to_entries | .[] | "--build-arg \(.key | ascii_upcase)_VERSION=\(.value)"' versions.yaml) -f Containerfile .
-```
-
 ## License
 
 Repository contents (e.g., `Containerfile`, build scripts, and configuration) are licensed under the **MIT License**.

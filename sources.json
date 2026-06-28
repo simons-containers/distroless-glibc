@@ -14,7 +14,7 @@
     }
   },
   "glibc": {
-    "version": "2.42",
+    "version": "2.43",
     "purl": "pkg:generic/glibc",
     "source": {
       "url_pattern": "https://ftp.gnu.org/gnu/glibc/glibc-{version}.tar.xz"

@@ -2,7 +2,7 @@ name: Update versions
 
 on:
   schedule:
-    - cron: "0 11 * * *"
+    - cron: 0 11 * * *
   workflow_dispatch:
 
 permissions:
@@ -28,15 +28,23 @@ jobs:
               | sort -V | tail -1)
   
             TZDB=$(curl -sf https://data.iana.org/time-zones/tzdb/version)
+
+            : ${GLIBC:?} ${TZDB:?}
   
-            yq -i ".glibc = \"$GLIBC\"" versions.yaml
-            yq -i ".tzdb = \"$TZDB\"" versions.yaml
-            git diff versions.yaml
+            jq \
+              --arg glibc "$GLIBC" \
+              --arg tzdb  "$TZDB" \
+              '
+                .glibc   = $glibc |
+                .tzdb    = $tzdb
+              ' sources.json > tmp.json && mv tmp.json sources.json
+
+            git diff sources.json
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v8
         with:
           branch: update-versions
           delete-branch: true
-          title: Update glibc and tzdb
-          commit-message: Update glibc and tzdb
+          title: Update versions
+          commit-message: Update versions

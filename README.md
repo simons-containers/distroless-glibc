@@ -1,6 +1,8 @@
-[![Current Version](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/release.svg)  
-![Current Size](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/size.svg)  
-![Tags](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/tags.svg)](https://github.com/simons-containers/distroless-glibc/pkgs/container/distroless-glibc) 
+[![Current Version](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/release.svg)](https://github.com/simons-containers/distroless-glibc/pkgs/container/distroless-glibc)
+[![Current Size](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/size.svg)](https://github.com/simons-containers/distroless-glibc/pkgs/container/distroless-glibc)
+[![Tags](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/tags.svg)](https://github.com/simons-containers/distroless-glibc/pkgs/container/distroless-glibc)   
+[![status](https://github.com/simons-containers/distroless-glibc/actions/workflows/deploy.yaml/badge.svg)](https://github.com/simons-containers/distroless-glibc/actions/workflows/deploy.yaml)
+[![status](https://github.com/simons-containers/distroless-glibc/actions/workflows/update-versions.yaml/badge.svg)](https://github.com/simons-containers/distroless-glibc/actions/workflows/update-versions.yaml)  
 
 # Distroless glibc container base
 

@@ -1,6 +1,6 @@
-[![Current Version](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/sources-json/release.svg)  
-![Current Size](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/sources-json/size.svg)  
-![Tags](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/sources-json/tags.svg)](https://github.com/simons-containers/distroless-glibc/pkgs/container/distroless-glibc) 
+[![Current Version](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/release.svg)  
+![Current Size](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/size.svg)  
+![Tags](https://raw.githubusercontent.com/simons-containers/distroless-glibc/badges/.badges/main/tags.svg)](https://github.com/simons-containers/distroless-glibc/pkgs/container/distroless-glibc) 
 
 # Distroless glibc container base
 

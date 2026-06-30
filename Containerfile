@@ -55,7 +55,7 @@ RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} 
 
 # Generate common UTF-8 locales
 ENV I18NPATH=/base/usr/share/i18n
-RUN mkdir -p /base/usr/lib/locale \
+RUN mkdir -p /tmp/common-locales/usr/lib/locale \
   && printf '%s\n' en_US zh_CN ja_JP de_DE fr_FR es_ES pt_BR ko_KR ru_RU it_IT nl_NL \
   | xargs -n1 -P$(nproc) -I{} ./build/locale/localedef --prefix=/base -i {} -f UTF-8 {}.UTF-8
 
@@ -76,6 +76,21 @@ RUN bash -c 'rm -fr /base/usr/include \
     /base/usr/lib/libanl.* /base/usr/lib/libBrokenLocale.* \
     /base/usr/lib/libmemusage.* /base/usr/lib/libpcprofile.* '
 
+FROM scratch AS common-locales
+
+ARG TZDB_VERSION
+ARG GLIBC_VERSION
+
+COPY --from=builder /base /
+COPY --from=builder /tmp/common-locales/usr/lib/locale/locale-archive /usr/lib/locale/locale-archive
+COPY ./etc /etc
+
+LABEL org.opencontainers.image.title="distroless glibc"
+LABEL org.opencontainers.image.description="distroless base image with glibc, tzdb, mozilla ca certs, and common locales"
+LABEL org.opencontainers.image.source="https://github.com/simons-containers/distroless-glibc"
+LABEL org.opencontainers.image.version="${GLIBC_VERSION}"
+LABEL org.opencontainers.image.base.libs="glibc@${GLIBC_VERSION},tzdb@${TZDB_VERSION}"
+
 FROM scratch
 
 ARG TZDB_VERSION
@@ -84,7 +99,7 @@ ARG GLIBC_VERSION
 COPY --from=builder /base /
 COPY ./etc /etc
 
-LABEL org.opencontainers.image.title="distroless"
+LABEL org.opencontainers.image.title="distroless glibc"
 LABEL org.opencontainers.image.description="distroless base image with glibc, tzdb, and mozilla ca certs"
 LABEL org.opencontainers.image.source="https://github.com/simons-containers/distroless-glibc"
 LABEL org.opencontainers.image.version="${GLIBC_VERSION}"

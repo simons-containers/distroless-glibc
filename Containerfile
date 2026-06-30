@@ -64,8 +64,8 @@ RUN mkdir -p /base/usr/lib/locale && \
 
 # Cleanup base dir
 RUN find /base/usr \( -name '*.h' -o -name '*.a' -o -name '*.o' \) -delete \
-  && find /base/usr/bin -type f ! -name 'locale' -delete \
-  && rm -fr /base/usr/include \
+  && find /base/usr/bin -type f ! -name 'locale' -delete
+RUN bash -c 'rm -fr /base/usr/include \
   && rm -fr /base/usr/lib/{audit,gconv} \
   && rm -fr /base/usr/bin/iconv \
   && rm -fr /base/usr/share/{info,i18n} \
@@ -77,7 +77,7 @@ RUN find /base/usr \( -name '*.h' -o -name '*.a' -o -name '*.o' \) -delete \
     /base/usr/lib/libnss_compat.* /base/usr/lib/libnss_hesiod.* \
     /base/usr/lib/libnss_db.* /base/usr/lib/libnsl.* \
     /base/usr/lib/libanl.* /base/usr/lib/libBrokenLocale.* \
-    /base/usr/lib/libmemusage.* /base/usr/lib/libpcprofile.*
+    /base/usr/lib/libmemusage.* /base/usr/lib/libpcprofile.* '
 
 FROM scratch
 

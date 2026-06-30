@@ -53,14 +53,10 @@ RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} 
   && make -s -j$(nproc) \
   && make install DESTDIR=/base
 
-# Generate all UTF-8 locales
+# Generate common UTF-8 locales
 ENV I18NPATH=/base/usr/share/i18n
-RUN mkdir -p /base/usr/lib/locale && \
-    ls /base/usr/share/i18n/locales \
-      | grep -v -E '^(C|POSIX|i18n|iso14651_|translit_|.*\.deprecated$)' \
-      | xargs -P"$(nproc)" -I{} \
-          sh -c './build/locale/localedef --prefix=/base \
-                    -i {} -f UTF-8 {}.UTF-8 2>/dev/null || true'
+RUN printf '%s\n' en_US zh_CN ja_JP de_DE fr_FR es_ES pt_BR ko_KR ru_RU it_IT nl_NL \
+  | xargs -n1 -P$(nproc) -I{} ./build/locale/localedef --prefix=/base -i {} -f UTF-8 {}.UTF-8
 
 # Cleanup base dir
 RUN find /base/usr \( -name '*.h' -o -name '*.a' -o -name '*.o' \) -delete \

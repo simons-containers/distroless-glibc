@@ -65,7 +65,7 @@ RUN mkdir -p /tmp/all-locales/usr/lib/locale && \
     ls /base/usr/share/i18n/locales \
       | grep -v -E '^(C|POSIX|i18n|iso14651_|translit_|.*\.deprecated$)' \
       | xargs -P"$(nproc)" -I{} \
-          sh -c 'localedef --prefix=/tmp/all-locales \
+          sh -c './build/locale/localedef --prefix=/tmp/all-locales \
                     -i {} -f UTF-8 {}.UTF-8 2>/dev/null || true'
 
 # Cleanup base dir

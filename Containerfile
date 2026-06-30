@@ -1,4 +1,4 @@
-FROM archlinux:base-devel-20260308.0.497099 AS builder
+FROM cgr.dev/chainguard/gcc-glibc:latest-dev AS builder
 
 ARG TZDB_VERSION
 ARG TZDB_SOURCE
@@ -6,9 +6,9 @@ ARG GLIBC_VERSION
 ARG GLIBC_SOURCE
 ARG CA_SCRIPT=https://github.com/curl/curl/raw/refs/heads/master/scripts/mk-ca-bundle.pl
 
-RUN pacman -Sy --needed --noconfirm python lzip >/dev/null
+RUN apk update && apk add curl lzip perl python-3.14 patch gawk bison
 
-RUN mkdir -p \
+RUN bash -c 'mkdir -p \
  /base/{dev,etc,proc,run,sys,tmp,usr} \
  /base/usr/{bin,include,lib} \
  /base/usr/share/zoneinfo \
@@ -20,11 +20,11 @@ RUN mkdir -p \
  && ln -s usr/lib /base/lib64 \
  && ln -s lib /base/usr/lib64 \
  && ln -s bin /base/usr/sbin \
- && chmod a+rwx /base/tmp
+ && chmod a+rwx /base/tmp'
 
 WORKDIR /build/tzdb
 RUN curl --silent --show-error --location --output tzdb.tar.lz ${TZDB_SOURCE} \
-  && tar xf tzdb.tar.lz --strip-components=1 \
+  && lzip -dc tzdb.tar.lz | tar x --strip-components=1 \
   && make -s zones DESTDIR=/base \
   && ln -sf /usr/share/zoneinfo/UTC /base/etc/localtime
 

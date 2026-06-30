@@ -6,7 +6,7 @@ ARG GLIBC_VERSION
 ARG GLIBC_SOURCE
 ARG CA_SCRIPT=https://github.com/curl/curl/raw/refs/heads/master/scripts/mk-ca-bundle.pl
 
-RUN apk update && apk add curl lzip perl python-3.14 patch gawk bison
+RUN apk update && apk add curl lzip perl python-3.14 patch gawk bison texinfo grep
 
 RUN bash -c 'mkdir -p \
  /base/{dev,etc,proc,run,sys,tmp,usr} \

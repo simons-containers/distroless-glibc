@@ -53,7 +53,7 @@ RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} 
   && make -s -j$(nproc) \
   && make install DESTDIR=/base
 
-# Generate en_US.UTF-8 and common UTF-8 locales
+# Generate en_US.UTF-8, common, and all UTF-8 locales
 ENV I18NPATH=/base/usr/share/i18n
 RUN mkdir -p /base/usr/lib/locale \
   && ./build/locale/localedef --prefix=/base -i en_US -f UTF-8 en_US.UTF-8
@@ -61,6 +61,12 @@ RUN mkdir -p /tmp/common-locales/usr/lib/locale \
   && printf '%s\n' en_US zh_CN ja_JP de_DE fr_FR es_ES pt_BR ko_KR ru_RU it_IT nl_NL \
   | xargs -n1 -P$(nproc) -I{} ./build/locale/localedef \
     --prefix=/tmp/common-locales -i {} -f UTF-8 {}.UTF-8
+RUN mkdir -p /tmp/all-locales/usr/lib/locale && \
+    ls /base/usr/share/i18n/locales \
+      | grep -v -E '^(C|POSIX|i18n|iso14651_|translit_|.*\.deprecated$)' \
+      | xargs -P"$(nproc)" -I{} \
+          sh -c 'localedef --prefix=/tmp/all-locales \
+                    -i {} -f UTF-8 {}.UTF-8 2>/dev/null || true'
 
 # Cleanup base dir
 RUN find /base/usr \( -name '*.h' -o -name '*.a' -o -name '*.o' \) -delete \
@@ -86,6 +92,21 @@ ARG GLIBC_VERSION
 
 COPY --from=builder /base /
 COPY --from=builder /tmp/common-locales/usr/lib/locale/locale-archive /usr/lib/locale/locale-archive
+COPY ./etc /etc
+
+LABEL org.opencontainers.image.title="distroless glibc"
+LABEL org.opencontainers.image.description="distroless base image with glibc, tzdb, mozilla ca certs, and common locales"
+LABEL org.opencontainers.image.source="https://github.com/simons-containers/distroless-glibc"
+LABEL org.opencontainers.image.version="${GLIBC_VERSION}"
+LABEL org.opencontainers.image.base.libs="glibc@${GLIBC_VERSION},tzdb@${TZDB_VERSION}"
+
+FROM scratch AS all-locales
+
+ARG TZDB_VERSION
+ARG GLIBC_VERSION
+
+COPY --from=builder /base /
+COPY --from=builder /tmp/all-locales/usr/lib/locale/locale-archive /usr/lib/locale/locale-archive
 COPY ./etc /etc
 
 LABEL org.opencontainers.image.title="distroless glibc"

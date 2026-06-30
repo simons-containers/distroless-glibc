@@ -55,7 +55,7 @@ RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} 
 
 # Generate all UTF-8 locales
 RUN mkdir -p /base/usr/lib/locale && \
-    ls /usr/share/i18n/locales \
+    ls /base/usr/share/i18n/locales \
       | grep -v -E '^(C|POSIX|i18n|iso14651_|translit_|.*\.deprecated$)' \
       | xargs -P"$(nproc)" -I{} \
           sh -c 'localedef \

@@ -55,7 +55,8 @@ RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} 
 
 # Generate common UTF-8 locales
 ENV I18NPATH=/base/usr/share/i18n
-RUN printf '%s\n' en_US zh_CN ja_JP de_DE fr_FR es_ES pt_BR ko_KR ru_RU it_IT nl_NL \
+RUN mkdir -p /base/usr/lib/locale \
+  && printf '%s\n' en_US zh_CN ja_JP de_DE fr_FR es_ES pt_BR ko_KR ru_RU it_IT nl_NL \
   | xargs -n1 -P$(nproc) -I{} ./build/locale/localedef --prefix=/base -i {} -f UTF-8 {}.UTF-8
 
 # Cleanup base dir

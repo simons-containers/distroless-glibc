@@ -54,12 +54,12 @@ RUN curl --silent --show-error --location --output glibc.tar.xz ${GLIBC_SOURCE} 
   && make install DESTDIR=/base
 
 # Generate all UTF-8 locales
+ENV I18NPATH=/base/usr/share/i18n
 RUN mkdir -p /base/usr/lib/locale && \
     ls /base/usr/share/i18n/locales \
       | grep -v -E '^(C|POSIX|i18n|iso14651_|translit_|.*\.deprecated$)' \
       | xargs -P"$(nproc)" -I{} \
-          sh -c 'localedef \
-                    --prefix=/base \
+          sh -c './build/locale/localedef --prefix=/base \
                     -i {} -f UTF-8 {}.UTF-8 2>/dev/null || true'
 
 # Cleanup base dir

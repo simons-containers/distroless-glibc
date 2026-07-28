@@ -117,6 +117,14 @@ ARG GLIBC_VERSION
 COPY --from=builder /base /
 COPY ./etc /etc
 
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+ENV CURL_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENV HTTPS_CA_FILE=/etc/ssl/certs/ca-certificates.crt
+ENV REQUESTS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+ENV GIT_SSL_CAINFO=/etc/ssl/certs/ca-certificates.crt
+ENV PIP_CERT=/etc/ssl/certs/ca-certificates.crt
+ENV AWS_CA_BUNDLE=/etc/ssl/certs/ca-certificates.crt
+
 LABEL org.opencontainers.image.title="distroless glibc"
 LABEL org.opencontainers.image.description="distroless base image with glibc, tzdb, and mozilla ca certs"
 LABEL org.opencontainers.image.source="https://github.com/simons-containers/distroless-glibc"

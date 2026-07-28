@@ -29,7 +29,7 @@ jobs:
           image_name: distroless-glibc
           registry_token: ${{ secrets.GITHUB_TOKEN }}
           badges_token: ${{ secrets.GITHUB_TOKEN }}
-          tag_latest: ${{ github.ref_name == github.event.repository.default_branch }}
+          tag_latest: false
           target: common-locales
           suffix: common-locales
 
@@ -40,7 +40,7 @@ jobs:
           image_name: distroless-glibc
           registry_token: ${{ secrets.GITHUB_TOKEN }}
           badges_token: ${{ secrets.GITHUB_TOKEN }}
-          tag_latest: ${{ github.ref_name == github.event.repository.default_branch }}
+          tag_latest: false
           target: all-locales
           suffix: all-locales
 

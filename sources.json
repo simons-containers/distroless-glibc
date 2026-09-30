@@ -1,6 +1,6 @@
 {
   "tzdb": {
-    "version": "2026d",
+    "version": "2026e",
     "purl": "pkg:generic/tzdb",
     "source": {
       "url_pattern": "https://data.iana.org/time-zones/releases/tzdb-{version}.tar.lz"
